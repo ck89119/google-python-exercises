@@ -38,12 +38,17 @@ def copy_to(paths, dir):
   for path in paths:
     shutil.copy(path, dir)
 
-def zip_to(paths, zipdir):
-  if not os.path.exists(zipdir):
-    os.mkdir(zipdir)
+def zip_to(paths, zippath):
+  command = 'zip -j ' + zippath + ' '
   for path in paths:
-
-
+    command += path + ' '
+  print "Command to run:", command
+  (status, output) = commands.getstatusoutput(command)
+  if status:
+    sys.stderr.write(output)
+    exit(1)
+  else:
+    print output
 
 def main():
   # This basic command line argument parsing code is provided.
